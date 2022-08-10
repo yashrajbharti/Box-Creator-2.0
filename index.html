@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Box Creator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="touchpunch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
+</head>
+
+<body>
+    <img src="pokedex.png" alt="" height="30px">
+    <h1>Box Creator 2.0</h1>
+    <a class="btn btn-success btn-gradient" href="javascript:void(0);"
+    onclick="generateScreenshot();"><span>Save</span></a>
+    <div class="color">
+        Pick a color <input onchange="colorSelected(this)" type="color">
+      </div>
+      <div class="slidecontainer">
+        <input type="range" min="1" max="100" value="35" class="slider" id="myRange">
+        <p>Border Curve Value: <span id="demo"></span></p>
+      </div>
+      <div class="slidecontainer">
+        <input type="range" min="0" max="40" value="10" class="slider" id="border">
+        <p>Border Width Value: <span id="demo2">10</span></p>
+      </div>
+      <div class="slidecontainer">
+        <input type="range" min="0" max="100" value="0" class="slider" id="transparent">
+        <p>Transparency Value: <span id="demo3">0</span></p>
+      </div>
+      <p>Length Value: <span id="demo4">400px</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Breadth Value: <span id="demo5">100px</span></p>
+    <div id="wrapper" class="box">
+    </div>
+   
+    
+    <script src="drag.js"></script>
+    <script>
+        function generateScreenshot() {
+
+            setTimeout(() => {
+                html2canvas(document.getElementById('wrapper'), {
+                    logging: true,
+                    profile: true,
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: null,
+                }).then(function (canvas) {
+                    var data = canvas.toDataURL('image/png', 0.9)
+                    var src = encodeURI(data);
+
+                    // document.getElementById('screenshot').src = src;
+                    const link = document.createElement('a')
+                    link.href = src
+                    link.download = 'box.png'
+                    document.body.appendChild(link)
+                    link.click()
+                    document.body.removeChild(link)
+                    document.getElementById('size').innerHTML = src.length + ' bytes';
+                });
+            }, 1000);
+        }
+
+
+    </script>
+
+</body>
+
+</html>
